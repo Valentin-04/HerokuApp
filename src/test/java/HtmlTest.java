@@ -9,10 +9,10 @@ import java.util.concurrent.TimeUnit;
 import static org.testng.Assert.*;
 
 public class HtmlTest {
-    public static final String URL = "file:/home/user/Desktop/index.html";
 
     @Test
     public void getDataFromSite() {
+        final String URL = "file:/home/user/Desktop/index.html";
         System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver");
         WebDriver browser = new ChromeDriver();
         browser.manage().window().maximize();
@@ -21,7 +21,7 @@ public class HtmlTest {
         browser.get(URL);
         // Check data from table
         String tableActualResult = browser.findElement(By.id("td5")).getText();
-        checkResult(tableActualResult, "Jackson");
+        assertEquals(tableActualResult, "Jackson");
 
         // Check data from button
         WebElement buttonActualResult = browser.findElement(By.id("btn"));
@@ -33,7 +33,7 @@ public class HtmlTest {
 
         // Check data from select
         String selectActualResult = browser.findElement(By.name("slc4")).getText();
-        checkResult(selectActualResult, "Opel");
+        assertEquals(selectActualResult, "Opel");
 
         // Check image
         WebElement imgActualResult = browser.findElement(By.xpath("//img[@alt='joke']"));
@@ -41,16 +41,12 @@ public class HtmlTest {
 
         // Check data from paragraph
         String paragraphActualResult = browser.findElement(By.id("text")).getText();
-        checkResult(paragraphActualResult, "Крановщик шестого разряда, не выходя с работы забрал ребёнка из садика");
+        assertEquals(paragraphActualResult, "Крановщик шестого разряда, не выходя с работы забрал ребёнка из садика");
 
         // Check link
         WebElement linkActualResult = browser.findElement(By.name("link"));
         assertTrue(linkActualResult.isDisplayed());
 
         browser.quit();
-    }
-
-    public void checkResult(String actualResult, String expectedResult) {
-        assertEquals(actualResult, expectedResult);
     }
 }
